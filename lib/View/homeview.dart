@@ -15,10 +15,10 @@ class _HomeviewState extends State<Homeview> {
   final formkey = GlobalKey<FormState>();
   String? dropdownvalue1;
   String? dropdownvalue2;
-  
-  get index => null;
+
   @override
   Widget build(BuildContext context) {
+    // var user = ModalRoute.of(context)!.settings.arguments as dynamic;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red[900],
@@ -28,102 +28,98 @@ class _HomeviewState extends State<Homeview> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      drawer: Consumer<Loginuserprovider>(
-        builder: (context,data,_) {
-          return Drawer(
-            backgroundColor: Colors.black,
-            elevation: 25,
-            child: ListView(
-              children: [
-                UserAccountsDrawerHeader(
-                  accountName:  Text(data.userGetter[index].name),
-                  accountEmail:  Text(data.userGetter[index].username),
-                  currentAccountPicture: CircleAvatar(
-                    radius: 45,
-                    backgroundColor: Colors.white,
-                    child: InkWell(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        radius: 35,
-                        backgroundColor: Colors.red,
-                        backgroundImage: NetworkImage("https://seeklogo.com/images/D/detective-logo-E3D520D0A0-seeklogo.com.png"),
-                      ),
-                    ),
-                  ),
-                  decoration: BoxDecoration(color: Colors.red[900]),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.home);
-                  },
-                  leading: const Icon(
-                    Icons.home,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    "Home",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  tileColor: Colors.black,
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.jobstatus);
-                  },
-                  leading: const Icon(
-                    Icons.work,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    "Job Status",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  tileColor: Colors.black,
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.myprofile);
-                  },
-                  leading: const Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    "My Profile",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  tileColor: Colors.black,
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.changepasswd);
-                  },
-                  leading: const Icon(
-                    Icons.lock,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    "Change Password",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  tileColor: Colors.black,
-                ),
-                ListTile(
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+        elevation: 25,
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text(""),
+              accountEmail: const Text(""),
+              currentAccountPicture: CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.white,
+                child: InkWell(
                   onTap: () {},
-                  leading: const Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    "Logout",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  tileColor: Colors.black,
+                  child: const CircleAvatar(
+                      radius: 35,
+                      backgroundColor: Colors.red,
+                      backgroundImage: NetworkImage(
+                          "https://seeklogo.com/images/D/detective-logo-E3D520D0A0-seeklogo.com.png")),
                 ),
-              ],
+              ),
+              decoration: BoxDecoration(color: Colors.red[900]),
             ),
-          );
-        }
+            ListTile(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              leading: const Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+              title: const Text(
+                "Home",
+                style: TextStyle(color: Colors.white),
+              ),
+              tileColor: Colors.black,
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.jobstatus);
+              },
+              leading: const Icon(
+                Icons.work,
+                color: Colors.white,
+              ),
+              title: const Text(
+                "Job Status",
+                style: TextStyle(color: Colors.white),
+              ),
+              tileColor: Colors.black,
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.myprofile,);
+              },
+              leading: const Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              title: const Text(
+                "My Profile",
+                style: TextStyle(color: Colors.white),
+              ),
+              tileColor: Colors.black,
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.changepasswd);
+              },
+              leading: const Icon(
+                Icons.lock,
+                color: Colors.white,
+              ),
+              title: const Text(
+                "Change Password",
+                style: TextStyle(color: Colors.white),
+              ),
+              tileColor: Colors.black,
+            ),
+            ListTile(
+              onTap: () {},
+              leading: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
+              title: const Text(
+                "Logout",
+                style: TextStyle(color: Colors.white),
+              ),
+              tileColor: Colors.black,
+            ),
+          ],
+        ),
       ),
       body: Container(
         color: Colors.redAccent.shade700,
@@ -229,7 +225,9 @@ class _HomeviewState extends State<Homeview> {
                       width: 200,
                       child: TextButton.icon(
                           onPressed: () {
-                            if (formkey.currentState!.validate()) {}
+                            if (formkey.currentState!.validate()) {
+                              Navigator.pushNamed(context, Routes.workview);
+                            }
                           },
                           icon: const Icon(Icons.arrow_forward),
                           iconAlignment: IconAlignment.end,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:serialkiller/ViewModel/loginuserprovider.dart';
 
 class Passwdupdateview extends StatefulWidget {
   const Passwdupdateview({super.key});
@@ -11,9 +13,11 @@ class _PasswdupdateviewState extends State<Passwdupdateview> {
   var oldpswdcontroller = TextEditingController();
   var newpswdcontroller = TextEditingController();
   var confirmpswdcontroller = TextEditingController();
+  var emailcontroller = TextEditingController();
   final formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<Loginuserprovider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
@@ -35,6 +39,30 @@ class _PasswdupdateviewState extends State<Passwdupdateview> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    controller: emailcontroller,
+                    cursorColor: Colors.white70,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Enter your Email";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 93, 52, 49),
+                        labelText: "Email",
+                        labelStyle: const TextStyle(color: Colors.white70),
+                        errorStyle: TextStyle(color: Colors.redAccent.shade700),
+                        focusedBorder: UnderlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(color: Colors.black),
+                        )),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
                     controller: oldpswdcontroller,
                     cursorColor: Colors.white70,
                     keyboardType: TextInputType.emailAddress,
@@ -47,7 +75,7 @@ class _PasswdupdateviewState extends State<Passwdupdateview> {
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(255, 93, 52, 49),
-                        labelText: "Old Passwors",
+                        labelText: "Old Password",
                         labelStyle: const TextStyle(color: Colors.white70),
                         errorStyle: TextStyle(color: Colors.redAccent.shade700),
                         focusedBorder: UnderlineInputBorder(
@@ -71,7 +99,7 @@ class _PasswdupdateviewState extends State<Passwdupdateview> {
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color.fromARGB(255, 93, 52, 49),
-                        labelText: "New Passwors",
+                        labelText: "New Password",
                         labelStyle: const TextStyle(color: Colors.white70),
                         errorStyle: TextStyle(color: Colors.redAccent.shade700),
                         focusedBorder: UnderlineInputBorder(
@@ -111,9 +139,18 @@ class _PasswdupdateviewState extends State<Passwdupdateview> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: MaterialButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (formkey.currentState!.validate()) {
-                      
+                        await provider.chanePassword(
+                            context,
+                            emailcontroller.text,
+                            oldpswdcontroller.text,
+                            newpswdcontroller.text,
+                            confirmpswdcontroller.text);
+                        emailcontroller.clear();
+                        oldpswdcontroller.clear();
+                        newpswdcontroller.clear();
+                        confirmpswdcontroller.clear();
                       }
                     },
                     color: Colors.redAccent.shade700,

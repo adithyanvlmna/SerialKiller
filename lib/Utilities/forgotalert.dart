@@ -1,4 +1,8 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void forgotPassword(context) {
   showDialog(
@@ -23,9 +27,9 @@ class _AlertDState extends State<AlertD> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.transparent, 
+      backgroundColor: Colors.transparent,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9, 
+        width: MediaQuery.of(context).size.width * 0.9,
         child: AlertDialog(
           backgroundColor: Colors.black,
           title: const Center(
@@ -68,9 +72,63 @@ class _AlertDState extends State<AlertD> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: MaterialButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        Navigator.pop(context);
+                        try {
+                          var response = await http.post(
+                            Uri.parse(
+                                "https://demo.thathwaa.com/SerialKiller/api/api/forgot_password.php"),
+                            body: {"email": emailController.text.toString()},
+                          );
+
+                          var decodedResponse = jsonDecode(response.body);
+
+                          if (decodedResponse != null &&
+                              decodedResponse["message"] != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                padding: const EdgeInsets.only(
+                                    left: 12.0, right: 12.0, bottom: 12.0),
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                content: Center(
+                                  child: Text(
+                                    "Successfull: ${decodedResponse["message"]}",
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                padding: const EdgeInsets.only(
+                                    left: 12.0, right: 12.0, bottom: 12.0),
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                content: const Center(
+                                  child: Text(
+                                    "Failed: Something Went Wrong",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+
+                          Navigator.pop(context);
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text("Error: $e"),
+                            ),
+                          );
+                        }
                       }
                     },
                     color: Colors.redAccent.shade700,
@@ -92,4 +150,3 @@ class _AlertDState extends State<AlertD> {
     );
   }
 }
-

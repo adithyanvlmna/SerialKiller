@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:serialkiller/Utilities/customappbarclipperinside.dart';
+import 'package:serialkiller/ViewModel/loginuserprovider.dart';
 
 class Profileview extends StatefulWidget {
   const Profileview({super.key});
@@ -11,109 +14,50 @@ class Profileview extends StatefulWidget {
 class _ProfileviewState extends State<Profileview> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<Loginuserprovider>(context, listen: false);
+    provider.getuser();
     return SafeArea(
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(300.0),
-          child: ClipPath(
-            clipper: CustomAppBarClipper2(),
-            child: AppBar(
-              
-              backgroundColor: Colors.red[900],
-              title: const Text(
-                "My Profile",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              centerTitle: true,
-              iconTheme: const IconThemeData(color: Colors.white),
-              flexibleSpace: Padding(
+        child: Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(303.0),
+        child: ClipPath(
+          clipper: CustomAppBarClipper2(),
+          child: AppBar(
+            backgroundColor: Colors.red[900],
+            title: const Text(
+              "My Profile",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            centerTitle: true,
+            iconTheme: const IconThemeData(color: Colors.white),
+            flexibleSpace: Padding(
                 padding: const EdgeInsets.only(top: 5),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: CircleAvatar(
-                        radius: 35,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.person,
-                          size: 50,
-                          color: Colors.red[900],
+                child: Consumer<Loginuserprovider>(builder: (context, data, _) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: const CircleAvatar(
+                          radius: 35,
+                          backgroundColor: Colors.white,
                         ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Thathwaa",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                       Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          data.userGetter[0].email,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    ],
+                  );
+                })),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                leading: const Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-                title: const Text(
-                  "Thathwa",
-                  style: TextStyle(color: Colors.white),
-                ),
-                tileColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                leading: const Icon(
-                  Icons.phone,
-                  color: Colors.white,
-                ),
-                title: const Text(
-                  "1236547890",
-                  style: TextStyle(color: Colors.white),
-                ),
-                tileColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                leading: const Icon(
-                  Icons.house,
-                  color: Colors.white,
-                ),
-                title: const Text(
-                  "ghgh",
-                  style: TextStyle(color: Colors.white),
-                ),
-                tileColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
-    );
+      body: Container(),
+    ));
   }
 }

@@ -1,27 +1,30 @@
 class Logineduser {
-  final String killerid;
-  final int id;
+  final String id;
   final String name;
-  final String username;
-  final String password;
+  final String scondname;
+  final String email;
   final String profileimage;
-  final int userid;
-  Logineduser(
-      {required this.killerid,
-      required this.id,
-      required this.name,
-      required this.username,
-      required this.password,
-      required this.profileimage,
-      required this.userid});
-  factory Logineduser.fromMap(Map<String, dynamic> data) {
-    return Logineduser(
-        killerid: data["killer_id"],
-        id: int.parse(data["id"]),
-        name: data["name"],
-        username: data["username"],
-        password: data["password"],
-        profileimage: data["profile_image"],
-        userid: int.parse(data["user_id"]));
-  }
+  final String flat;
+  final String mobile;
+  Logineduser({
+    required this.id,
+    required this.name,
+    required this.scondname,
+    required this.email,
+    required this.profileimage,
+    required this.flat,
+    required this.mobile,
+  });
+ factory Logineduser.fromMap(Map<String, dynamic> data) {
+  return Logineduser(
+    id: data["killer_id"].toString(),
+    name: data["firstname"].toString(),
+    scondname: data["secondname"].toString(),
+    email: data["email"].toString(),
+    profileimage: data["profile_image"].toString(),
+    flat: data["flat"].toString(),
+    mobile: data["mobile"].toString(),
+  );
+}
+
 }
